@@ -1,14 +1,14 @@
 import pickle
 from flask import Flask, render_template, request
 import numpy as np
-
+from sklearn.preprocessing import StandardScaler
 application = Flask(__name__)
 app = application
 
 
 # Load model and scaler
 best_model = pickle.load(
-    open("models/best_model.pkl", "rb")
+    open("models/new_best_model.pkl", "rb")
 )
 
 scaler = pickle.load(
@@ -60,20 +60,30 @@ def predict_disease():
         # Scale input
         features_scaled = scaler.transform(features)
 
-        # Make prediction
         prediction = best_model.predict(features_scaled)
 
-        # Convert prediction into readable output
-        if prediction[0] == 1:
-            result = "Heart Disease Detected"
-        else:
-            result = "No Heart Disease Detected"
+        probability = best_model.predict_proba(features_scaled)
 
+        risk_percentage = probability[0][1] * 100
+
+        if prediction[0] == 1:
+                result = "Heart Disease Detected"
+        else:
+                result = "No Heart Disease Detected"
+        if risk_percentage < 30:
+              risk_level = "Low Risk"
+        elif risk_percentage < 70:
+              risk_level = "Moderate Risk"
+        else:
+            risk_level = "High Risk"
         # Return result
         return render_template(
             "home.html",
-             prediction=result
+             prediction=result,
+             risk_percentage=risk_percentage,
+             risk_level=risk_level
         )
+
 
     # If GET request
     return render_template("home.html")
