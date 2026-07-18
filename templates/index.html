@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CardioPredict AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(circle at 20% 20%, #243b55, transparent 35%),
+                radial-gradient(circle at 80% 80%, #141e30, transparent 40%),
+                linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+
+            color: white;
+
+            overflow-x: hidden;
+
+        }
+
+
+        /* Floating background circles */
+
+        .circle {
+
+            position: fixed;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.08);
+
+            animation: float 8s infinite ease-in-out;
+
+            z-index: 0;
+
+        }
+
+        .circle:nth-child(1) {
+
+            width: 180px;
+            height: 180px;
+
+            top: 10%;
+            left: 5%;
+
+        }
+
+        .circle:nth-child(2) {
+
+            width: 250px;
+            height: 250px;
+
+            bottom: 5%;
+            right: 5%;
+
+            animation-delay: 2s;
+
+        }
+
+        .circle:nth-child(3) {
+
+            width: 100px;
+            height: 100px;
+
+            top: 50%;
+            right: 25%;
+
+            animation-delay: 4s;
+
+        }
+
+        @keyframes float {
+
+            0%, 100% {
+
+                transform: translateY(0px);
+
+            }
+
+            50% {
+
+                transform: translateY(-35px);
+
+            }
+
+        }
+
+
+        /* Navbar */
+
+        nav {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 25px 8%;
+
+        }
+
+        .logo {
+
+            font-size: 26px;
+
+            font-weight: bold;
+
+            color: #ffffff;
+
+        }
+
+        .logo span {
+
+            color: #00e5ff;
+
+        }
+
+        nav a {
+
+            color: white;
+
+            text-decoration: none;
+
+            margin-left: 30px;
+
+            transition: 0.3s;
+
+        }
+
+        nav a:hover {
+
+            color: #00e5ff;
+
+        }
+
+
+        /* Main hero section */
+
+        .hero {
+
+            position: relative;
+
+            z-index: 1;
+
+            min-height: 75vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 50px 10%;
+
+            gap: 50px;
+
+        }
+
+
+        .hero-text {
+
+            max-width: 600px;
+
+            animation: slideLeft 1.2s ease;
+
+        }
+
+        @keyframes slideLeft {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateX(-70px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateX(0);
+
+            }
+
+        }
+
+        .hero-text h1 {
+
+            font-size: 58px;
+
+            line-height: 1.1;
+
+            margin-bottom: 25px;
+
+        }
+
+        .hero-text h1 span {
+
+            color: #00e5ff;
+
+        }
+
+        .hero-text p {
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            color: #d6e4ea;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .btn {
+
+            display: inline-block;
+
+            padding: 15px 32px;
+
+            border-radius: 30px;
+
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            box-shadow: 0 0 25px rgba(0,198,255,0.5);
+
+            transition: 0.3s;
+
+        }
+
+        .btn:hover {
+
+            transform: scale(1.08);
+
+            box-shadow: 0 0 40px rgba(0,198,255,0.9);
+
+        }
+
+
+        /* Heart animation */
+
+        .heart-container {
+
+            position: relative;
+
+            width: 350px;
+
+            height: 350px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            animation: slideRight 1.2s ease;
+
+        }
+
+        @keyframes slideRight {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateX(70px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateX(0);
+
+            }
+
+        }
+
+        .heart {
+
+            font-size: 170px;
+
+            animation: heartbeat 1.4s infinite;
+
+            filter: drop-shadow(0 0 25px #ff4b5c);
+
+        }
+
+        @keyframes heartbeat {
+
+            0% {
+
+                transform: scale(1);
+
+            }
+
+            15% {
+
+                transform: scale(1.15);
+
+            }
+
+            30% {
+
+                transform: scale(1);
+
+            }
+
+            45% {
+
+                transform: scale(1.15);
+
+            }
+
+            60% {
+
+                transform: scale(1);
+
+            }
+
+        }
+
+
+        /* Pulse rings */
+
+        .pulse {
+
+            position: absolute;
+
+            width: 260px;
+
+            height: 260px;
+
+            border: 2px solid rgba(0,229,255,0.5);
+
+            border-radius: 50%;
+
+            animation: pulse 2s infinite;
+
+        }
+
+        .pulse:nth-child(2) {
+
+            animation-delay: 0.6s;
+
+        }
+
+        @keyframes pulse {
+
+            0% {
+
+                transform: scale(0.7);
+
+                opacity: 1;
+
+            }
+
+            100% {
+
+                transform: scale(1.5);
+
+                opacity: 0;
+
+            }
+
+        }
+
+
+        /* Features */
+
+        .features {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 25px;
+
+            padding: 20px 8% 50px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .card {
+
+            width: 250px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            border-radius: 20px;
+
+            background: rgba(255,255,255,0.1);
+
+            backdrop-filter: blur(12px);
+
+            border: 1px solid rgba(255,255,255,0.15);
+
+            transition: 0.4s;
+
+        }
+
+        .card:hover {
+
+            transform: translateY(-12px);
+
+            background: rgba(255,255,255,0.18);
+
+        }
+
+        .card h3 {
+
+            margin: 12px 0;
+
+            color: #00e5ff;
+
+        }
+
+        .card p {
+
+            color: #d0dce1;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+        }
+
+        .icon {
+
+            font-size: 42px;
+
+        }
+
+
+        /* Mobile */
+
+        @media(max-width: 800px) {
+
+            .hero {
+
+                flex-direction: column;
+
+                text-align: center;
+
+            }
+
+            .hero-text h1 {
+
+                font-size: 42px;
+
+            }
+
+            .heart-container {
+
+                width: 250px;
+
+                height: 250px;
+
+            }
+
+            .heart {
+
+                font-size: 120px;
+
+            }
+
+            nav {
+
+                padding: 20px;
+
+            }
+
+            nav a {
+
+                display: none;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Animated background -->
+
+    <div class="circle"></div>
+
+    <div class="circle"></div>
+
+    <div class="circle"></div>
+
+
+    <!-- Navigation -->
+
+    <nav>
+
+        <div class="logo">
+
+            Cardio<span>Predict</span> AI
+
+        </div>
+
+        <div>
+
+            <a href="/">Home</a>
+
+            <a href="/predict">Prediction</a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Hero -->
+
+    <section class="hero">
+
+
+        <div class="hero-text">
+
+            <h1>
+
+                Understand Your
+
+                <span>Heart Health</span>
+
+            </h1>
+
+
+            <p>
+
+                CardioPredict AI uses machine learning to analyze
+
+                multiple health parameters and provide an intelligent
+
+                heart disease prediction.
+
+            </p>
+
+
+            <a href="/predict" class="btn">
+
+                Start Prediction →
+
+            </a>
+
+        </div>
+
+
+        <div class="heart-container">
+
+            <div class="pulse"></div>
+
+            <div class="pulse"></div>
+
+            <div class="heart">
+
+                ❤️
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- Feature cards -->
+
+    <section class="features">
+
+
+        <div class="card">
+
+            <div class="icon">🤖</div>
+
+            <h3>AI Powered</h3>
+
+            <p>
+
+                Powered by a tuned machine learning model
+
+                trained on medical data.
+
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">📊</div>
+
+            <h3>13 Parameters</h3>
+
+            <p>
+
+                Analyze important health and clinical parameters
+
+                related to heart disease.
+
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">⚡</div>
+
+            <h3>Instant Prediction</h3>
+
+            <p>
+
+                Get the model's prediction instantly after
+
+                entering the required information.
+
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+</body>
+
+</html>
