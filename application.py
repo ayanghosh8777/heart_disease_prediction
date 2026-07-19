@@ -1,7 +1,7 @@
 import pickle
 from flask import Flask, render_template, request
 import numpy as np
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import (
     LoginManager,
@@ -47,6 +47,8 @@ class User(UserMixin, db.Model):
         db.String(200),
         nullable=False
     )
+    with app.app_context():
+      db.create_all()
 # Load model and scaler
 best_model = pickle.load(
     open("models/new_best_model.pkl", "rb")
@@ -206,9 +208,4 @@ def predict_disease():
 
 
 if __name__ == '__main__':
-
-    with app.app_context():
-
-        db.create_all()
-
     app.run(debug=True)
