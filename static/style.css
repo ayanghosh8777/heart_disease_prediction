@@ -1,0 +1,170 @@
+.history-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px 24px;
+
+    text-decoration: none;
+
+    color: white;
+
+    background: linear-gradient(
+        135deg,
+        #00e5ff,
+        #0077ff
+    );
+
+    border-radius: 14px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    box-shadow: 0 8px 25px rgba(0, 229, 255, 0.25);
+
+    transition: all 0.35s ease;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.history-btn:hover {
+    transform: translateY(-5px) scale(1.03);
+
+    box-shadow: 0 15px 35px rgba(0, 229, 255, 0.45);
+}
+
+.history-btn .arrow {
+    font-size: 22px;
+
+    transition: transform 0.3s ease;
+}
+
+.history-btn:hover .arrow {
+    transform: translateX(7px);
+}
+
+.history-btn .history-icon {
+    font-size: 20px;
+
+    transition: transform 0.3s ease;
+}
+
+.history-btn:hover .history-icon {
+    transform: rotate(10deg) scale(1.2);
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.nav-links a {
+    margin-left: 0;
+}
+
+.welcome {
+    color: #00e5ff;
+    font-weight: bold;
+}
+
+.login-btn {
+    padding: 10px 20px;
+    border: 1px solid #00e5ff;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background: #00e5ff;
+    color: #071018;
+}
+
+.signup-btn {
+    padding: 11px 22px;
+    border-radius: 25px;
+    background: linear-gradient(
+        135deg,
+        #00c6ff,
+        #0072ff
+    );
+
+    font-weight: bold;
+
+    box-shadow: 0 0 15px rgba(0, 198, 255, 0.4);
+
+    transition: 0.3s;
+}
+
+.signup-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+
+    box-shadow: 0 0 30px rgba(0, 198, 255, 0.8);
+}
+
+.logout-btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    background: rgba(255, 80, 80, 0.15);
+    border: 1px solid rgba(255, 80, 80, 0.5);
+}
+
+.logout-btn:hover {
+    background: #ff4b5c;
+    color: white;
+}
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 11px 22px;
+
+    color: #ff6b6b;
+    text-decoration: none;
+
+    border: 1px solid rgba(255, 107, 107, 0.5);
+    border-radius: 30px;
+
+    background: rgba(255, 107, 107, 0.08);
+
+    font-weight: 600;
+
+    transition: all 0.35s ease;
+
+    position: relative;
+    overflow: hidden;
+}
+
+.logout-btn span {
+    font-size: 20px;
+
+    transition: transform 0.35s ease;
+}
+
+/* Hover effect */
+
+.logout-btn:hover {
+    color: white;
+
+    background: linear-gradient(
+        135deg,
+        #ff416c,
+        #ff4b2b
+    );
+
+    border-color: transparent;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 25px rgba(255, 65, 108, 0.45);
+}
+
+/* Icon animation */
+
+.logout-btn:hover span {
+    transform: translateX(5px);
+}

@@ -47,7 +47,40 @@ class User(UserMixin, db.Model):
         db.String(200),
         nullable=False
     )
-    with app.app_context():
+from datetime import datetime
+class PredictionHistory(db.Model):
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('user.id'),
+        nullable=False
+    )
+
+    risk_percentage = db.Column(
+        db.Float,
+        nullable=False
+    )
+
+    risk_level = db.Column(
+        db.String(50),
+        nullable=False
+    )
+
+    result = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow
+    )
+with app.app_context():
       db.create_all()
 # Load model and scaler
 best_model = pickle.load(
@@ -138,6 +171,28 @@ def logout():
     return redirect(
         url_for('login')
     )
+@app.route('/history')
+@login_required
+def history():
+
+    predictions = PredictionHistory.query.filter_by(
+
+        user_id=current_user.id
+
+    ).order_by(
+
+                   PredictionHistory.created_at.desc()
+
+    ).all()
+
+
+    return render_template(
+
+        'history.html',
+
+        predictions=predictions
+
+    )
 @app.route("/predict", methods=["GET", "POST"])
 @login_required
 def predict_disease():
@@ -194,6 +249,20 @@ def predict_disease():
               risk_level = "Moderate Risk"
         else:
             risk_level = "High Risk"
+        new_prediction = PredictionHistory(
+
+              user_id=current_user.id,
+
+              risk_percentage=risk_percentage,
+
+              risk_level=risk_level,
+
+              result=result
+)
+
+        db.session.add(new_prediction)
+
+        db.session.commit()
         # Return result
         return render_template(
             "home.html",
